@@ -3,85 +3,622 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FB CAMAM PRO - App</title>
+  <title>FB CAMAM PRO - Búsquedas Avanzadas en Facebook</title>
   <link rel="manifest" href="./manifest.webmanifest">
-  <meta name="theme-color" content="#0b1220" />
+  <meta name="theme-color" content="#1e40af" />
+  <meta name="description" content="Herramienta profesional para búsquedas avanzadas en Facebook Marketplace, Grupos, Páginas y más.">
   <style>
-    :root{
-      --bg: linear-gradient(135deg,#3b82f6,#2dd4bf);
-      --card: rgba(255,255,255,0.06);
-      --text: #ffffff;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg: linear-gradient(135deg,#e6f3ff,#dffbf7);
-        --card: rgba(10,25,47,0.04);
-        --text: #07122a;
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #ffffff;
+    }
+
+    /* HEADER */
+    .header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo-section {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo-text h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .logo-text p {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .hero h2 {
+      font-size: 48px;
+      font-weight: 900;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 20px;
+      opacity: 0.95;
+      margin-bottom: 40px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* SEARCH SECTION */
+    .search-container {
+      max-width: 900px;
+      margin: 0 auto 60px;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-container h3 {
+      color: #1e293b;
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      color: #334155;
+      font-weight: 700;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s;
+      color: #1e293b;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 15px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    .action-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .btn-secondary {
+      background: #f1f5f9;
+      color: #1e293b;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+    }
+
+    .preview-box {
+      margin-top: 20px;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 12px;
+      color: #64748b;
+      font-size: 13px;
+      word-break: break-all;
+      border: 2px dashed #e2e8f0;
+    }
+
+    /* FEATURES SECTION */
+    .features {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+
+    .features h2 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 50px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-icon {
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      opacity: 0.9;
+      line-height: 1.6;
+    }
+
+    /* CATEGORIES SECTION */
+    .categories {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+
+    .categories h2 {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 50px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .category-item {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .category-item:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: scale(1.05);
+    }
+
+    .category-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+    }
+
+    .category-item h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .category-item p {
+      opacity: 0.9;
+      font-size: 14px;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 40px 20px;
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    .footer p {
+      opacity: 0.9;
+      margin-bottom: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    .footer-links a {
+      color: white;
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero h2 {
+        font-size: 32px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .search-container {
+        padding: 25px;
       }
     }
-    *{box-sizing:border-box;font-family:Inter, Roboto, Arial, sans-serif}
-    body{
-      margin:0; min-height:100vh;
-      background: var(--bg);
-      display:flex;align-items:center;justify-content:center;padding:18px;color:var(--text);
-    }
-    .app{
-      width:100%;max-width:420px;background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));
-      border-radius:18px;padding:16px;box-shadow:0 12px 40px rgba(2,6,23,0.35);
-      backdrop-filter: blur(6px);
-    }
-    .header{display:flex;gap:12px;align-items:center}
-    .logo{width:64px;height:64px;border-radius:14px;background:linear-gradient(135deg,#3b82f6,#2dd4bf);
-          display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;box-shadow:0 8px 30px rgba(11,22,70,0.35)}
-    h1{margin:0;font-size:18px}
-    p.sub{margin:4px 0 12px;font-size:13px;opacity:0.95}
-    label{font-weight:700;font-size:13px;margin-top:8px;display:block}
-    input[type="text"]{width:100%;padding:12px;border-radius:12px;border:none;margin-top:8px;background:rgba(255,255,255,0.06);color:var(--text);font-size:15px}
-    .controls{display:flex;gap:8px;margin-top:12px}
-    select{flex:1;padding:10px;border-radius:12px;border:none;background:rgba(255,255,255,0.04);font-weight:700}
-    .btn{padding:12px 14px;border-radius:12px;border:none;font-weight:800;cursor:pointer;background:linear-gradient(90deg,#06b6d4,#3b82f6);color:white}
-    .actions{display:flex;gap:8px;margin-top:12px}
-    .icon-btn{flex:1;padding:10px;border-radius:12px;border:none;background:rgba(255,255,255,0.03);font-weight:800;cursor:pointer}
-    .preview{margin-top:12px;font-size:13px;word-break:break-all;opacity:0.95}
-    footer{margin-top:12px;font-size:12px;opacity:0.9;text-align:center}
-    .note{font-size:12px;color:rgba(255,255,255,0.85);opacity:0.9}
   </style>
 </head>
 <body>
-  <div class="app" role="application">
-    <div class="header">
-      <div class="logo">CAMAM</div>
-      <div>
-        <h1>FB CAMAM PRO</h1>
-        <p class="sub">App web rápida – Marketplace · Grupos · Publicaciones · Páginas · #Hashtags</p>
-      </div>
-    </div>
 
-    <label for="query">¿Qué deseas buscar?</label>
-    <input id="query" type="text" placeholder="Ej: rentar en Jacksonville, apartment for rent" autofocus />
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo">🔍</div>
+        <div class="logo-text">
+          <h1>FB CAMAM PRO</h1>
+          <p>Búsquedas Avanzadas</p>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#buscar">Buscar</a>
+        <a href="#caracteristicas">Características</a>
+        <a href="#categorias">Categorías</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h2>Encuentra lo que buscas en Facebook<br>de forma rápida y profesional</h2>
+    <p>La herramienta definitiva para búsquedas avanzadas en Marketplace, Grupos, Páginas, Publicaciones y Hashtags</p>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="search-container" id="buscar">
+    <h3>🔎 Realiza tu búsqueda</h3>
+    
+    <div class="input-group">
+      <label for="query">¿Qué deseas buscar?</label>
+      <input id="query" type="text" placeholder="Ej: apartment for rent Jacksonville, iPhone 15 Pro Max..." autofocus />
+    </div>
 
     <div class="controls">
       <select id="type">
-        <option value="top">Resultados (todo)</option>
-        <option value="marketplace">Marketplace</option>
-        <option value="groups">Grupos</option>
-        <option value="posts">Publicaciones</option>
-        <option value="pages">Páginas</option>
-        <option value="hashtags">Hashtags</option>
+        <option value="top">🌐 Resultados (todo)</option>
+        <option value="marketplace">🛒 Marketplace</option>
+        <option value="groups">👥 Grupos</option>
+        <option value="posts">📝 Publicaciones</option>
+        <option value="pages">📄 Páginas</option>
+        <option value="hashtags">🔖 Hashtags</option>
       </select>
-      <button id="search" class="btn">Buscar</button>
+      <button id="search" class="btn-primary">Buscar</button>
     </div>
 
-    <div class="actions">
-      <button id="open" class="icon-btn">Abrir en Facebook</button>
-      <button id="copy" class="icon-btn">Copiar enlace</button>
+    <div class="action-buttons">
+      <button id="open" class="btn-secondary">🔗 Abrir en Facebook</button>
+      <button id="copy" class="btn-secondary">📋 Copiar enlace</button>
     </div>
 
-    <div class="preview" id="urlPreview">Escribe para ver el enlace...</div>
-    <div class="note">Consejo: agrega a tu pantalla de inicio para usarla como app.</div>
-    <footer>FB CAMAM PRO • Brillante y profesional</footer>
-  </div>
+    <div class="preview-box" id="urlPreview">
+      Escribe algo para ver el enlace...
+    </div>
+  </section>
 
-<script src="./app.js"></script>
+  <!-- FEATURES -->
+  <section class="features" id="caracteristicas">
+    <h2>✨ Características Principales</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Ultra Rápido</h3>
+        <p>Genera búsquedas optimizadas en milisegundos. Sin demoras, sin complicaciones.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Búsquedas Precisas</h3>
+        <p>Filtra por categoría específica: Marketplace, Grupos, Páginas y más.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>PWA Instalable</h3>
+        <p>Instala como app en tu móvil. Funciona offline después de la primera visita.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>Comparte Fácil</h3>
+        <p>Copia enlaces con un clic y compártelos con quien quieras.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Diseño Moderno</h3>
+        <p>Interfaz profesional y atractiva que se adapta a cualquier dispositivo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>100% Seguro</h3>
+        <p>No guardamos datos. Todo funciona directo en tu navegador.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="categories" id="categorias">
+    <h2>🎯 Categorías de Búsqueda</h2>
+    <div class="category-grid">
+      <div class="category-item" data-category="marketplace">
+        <div class="category-icon">🛒</div>
+        <h3>Marketplace</h3>
+        <p>Productos, servicios y artículos en venta</p>
+      </div>
+      <div class="category-item" data-category="groups">
+        <div class="category-icon">👥</div>
+        <h3>Grupos</h3>
+        <p>Comunidades y grupos de interés</p>
+      </div>
+      <div class="category-item" data-category="posts">
+        <div class="category-icon">📝</div>
+        <h3>Publicaciones</h3>
+        <p>Posts específicos y contenido viral</p>
+      </div>
+      <div class="category-item" data-category="pages">
+        <div class="category-icon">📄</div>
+        <h3>Páginas</h3>
+        <p>Páginas de negocios y marcas</p>
+      </div>
+      <div class="category-item" data-category="hashtags">
+        <div class="category-icon">🔖</div>
+        <h3>Hashtags</h3>
+        <p>Tendencias y temas populares</p>
+      </div>
+      <div class="category-item" data-category="top">
+        <div class="category-icon">🌐</div>
+        <h3>Todo</h3>
+        <p>Búsqueda general completa</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p><strong>FB CAMAM PRO</strong> - Herramienta profesional para búsquedas en Facebook</p>
+    <p>Hecho con ❤️ por THEGITANO · 2025</p>
+    <div class="footer-links">
+      <a href="https://github.com/THEGITANO/CAMAMBUEY" target="_blank">GitHub</a>
+      <a href="#buscar">Buscar</a>
+      <a href="#caracteristicas">Características</a>
+    </div>
+  </footer>
+
+  <script>
+    const input = document.getElementById('query');
+    const type = document.getElementById('type');
+    const searchBtn = document.getElementById('search');
+    const openBtn = document.getElementById('open');
+    const copyBtn = document.getElementById('copy');
+    const preview = document.getElementById('urlPreview');
+
+    const PATHS = {
+      top: 'top',
+      marketplace: 'marketplace',
+      groups: 'groups',
+      posts: 'posts',
+      pages: 'pages',
+      hashtags: 'top'
+    };
+
+    function buildURL(q, tpe){
+      const fbBase = 'https://www.facebook.com/search/';
+      let qstr = q;
+      if(tpe === 'hashtags'){
+        if(!qstr.startsWith('#')) qstr = '#' + qstr;
+        qstr = qstr.replace('#', '%23');
+      }
+      return fbBase + (PATHS[tpe] || 'top') + '?q=' + encodeURIComponent(qstr);
+    }
+
+    function updatePreview(){
+      const q = input.value.trim();
+      if(!q){ 
+        preview.innerHTML = '💡 <strong>Escribe algo para ver el enlace...</strong>'; 
+        return ''; 
+      }
+      const url = buildURL(q, type.value);
+      preview.innerHTML = `🔗 <strong>Enlace generado:</strong><br>${url}`;
+      return url;
+    }
+
+    searchBtn.addEventListener('click', ()=>{ 
+      const url = updatePreview(); 
+      if(url) window.open(url, '_blank'); 
+    });
+
+    openBtn.addEventListener('click', ()=>{ 
+      const url = updatePreview(); 
+      if(url) window.open(url, '_blank'); 
+    });
+
+    copyBtn.addEventListener('click', ()=>{
+      const url = updatePreview();
+      if(!url) return;
+      navigator.clipboard.writeText(url).then(()=>{ 
+        copyBtn.textContent = '✅ Enlace copiado'; 
+        setTimeout(()=>copyBtn.textContent='📋 Copiar enlace',1400); 
+      }).catch(()=>alert('No se pudo copiar'));
+    });
+
+    input.addEventListener('keydown', (e)=>{ 
+      if(e.key === 'Enter') { 
+        const url = updatePreview(); 
+        if(url) window.open(url, '_blank'); 
+      }
+    });
+
+    type.addEventListener('change', updatePreview);
+    input.addEventListener('input', updatePreview);
+
+    // Category items click
+    document.querySelectorAll('.category-item').forEach(item => {
+      item.addEventListener('click', ()=>{
+        const cat = item.dataset.category;
+        type.value = cat;
+        updatePreview();
+        document.getElementById('buscar').scrollIntoView({behavior: 'smooth'});
+        input.focus();
+      });
+    });
+
+    // Prefill from clipboard
+    if(navigator.clipboard){
+      navigator.clipboard.readText().then(t=>{
+        if(t && t.length<120 && !input.value) input.value = t;
+        updatePreview();
+      }).catch(()=>{});
+    }
+
+    // Service Worker
+    if('serviceWorker' in navigator){
+      navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
+    }
+  </script>
+
 </body>
 </html>
