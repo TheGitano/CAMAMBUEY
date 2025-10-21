@@ -15,8 +15,6 @@ const PATHS = {
 };
 
 function buildURL(q, tpe){
-  const base = location.origin + '/fb-search-proxy?'; // placeholder for relative behavior
-  // We'll actually open facebook.com directly since proxy isn't provided.
   const fbBase = 'https://www.facebook.com/search/';
   let qstr = q;
   if(tpe === 'hashtags'){
@@ -56,5 +54,5 @@ if(navigator.clipboard){
 
 // Register basic service worker for offline shell
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/service-worker.js').catch(()=>{/* ignore */});
+  navigator.serviceWorker.register('./service-worker.js').catch(()=>{/* ignore */});
 }
